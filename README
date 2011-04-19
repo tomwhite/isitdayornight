@@ -1,0 +1,3 @@
+A combination of HTML 5 geolocation and Preston Hunt's sunrise and sunset
+Javascript code (http://williams.best.vwh.net/sunrise_sunset_algorithm.htm)
+to create a webpage which knows if it's day or night where you are.

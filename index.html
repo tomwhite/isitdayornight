@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--
+Copyright 2011 Tom White
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Is it day or night?</title>
+</head>
+<body style="background-color: gray">
+  <script src="http://code.google.com/apis/gears/gears_init.js"
+    type="text/javascript"></script>
+  <script src="geo.js" type="text/javascript"></script>
+  <script src="sunrise.js" type="text/javascript"></script>
+  <script>
+    if(geo_position_js.init()){
+      geo_position_js.getCurrentPosition(success_callback,error_callback,
+        {enableHighAccuracy:false});
+    }
+
+    function success_callback(p) {
+      var now = new Date();
+      var here = new SunriseSunset(now.getFullYear(), now.getMonth() + 1,
+        now.getDate(), p.coords.latitude, p.coords.longitude);
+      var sunrise = here.sunriseLocalHours(-now.getTimezoneOffset()/60);
+      var sunset = here.sunsetLocalHours(-now.getTimezoneOffset()/60);
+      var current = now.getHours() + now.getMinutes()/60;
+      if (current < sunrise || current > sunset) {
+        document.body.style.background = "black";
+      } else {
+        document.body.style.background = "white";
+      }
+    }
+    function error_callback(p) {
+      // ignore it and just leave the screen grey
+    }
+  </script>
+</body>
+</html>
